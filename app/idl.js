@@ -1,5 +1,5 @@
 export const idl = {
-  "address": "5EEpojrJiksc97xwZzcKttwV3TgvSEzaj2Ybw5WbPCrC",
+  "address": "B6Mes3SydVQ9CYjRxxvwoTAo3AyDR7n7EVrsk4gvv6WQ",
   "metadata": {
     "name": "simple_curd",
     "version": "0.1.0",
@@ -58,7 +58,12 @@ export const idl = {
           "address": "11111111111111111111111111111111"
         }
       ],
-      "args": []
+      "args": [
+        {
+          "name": "_id",
+          "type": "u64"
+        }
+      ]
     },
     {
       "name": "initialize",

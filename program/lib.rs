@@ -1,6 +1,7 @@
 use anchor_lang::prelude::*;
 
-declare_id!("");
+
+declare_id!("B6Mes3SydVQ9CYjRxxvwoTAo3AyDR7n7EVrsk4gvv6WQ");
 
 #[program]
 pub mod simple_curd {
@@ -10,24 +11,24 @@ pub mod simple_curd {
         ctx: Context<Initialize>,
         id: u64,
         merchant_name: String,
-        amount: u64,) -> Result<()> {
-         let expense_account = &mut ctx.accounts.expense_account;
+        amount: u64,
+    ) -> Result<()> {
+        let expense_account = &mut ctx.accounts.expense_account;
 
         expense_account.id = id;
         expense_account.merchant_name = merchant_name;
         expense_account.amount = amount;
         expense_account.owner = *ctx.accounts.signer.key;
 
-        msg!("Expense account initialized with ID: {}", expense_account.id);
+        msg!(
+            "Expense account initialized with ID: {}",
+            expense_account.id
+        );
         msg!("Owner: {}", expense_account.owner);
         Ok(())
     }
 
-    pub fn update(
-        ctx: Context<Update>,
-        id: u64,
-        merchant_name: String,
-        amount: u64,) -> Result<()> {
+    pub fn update(ctx: Context<Update>, id: u64, merchant_name: String, amount: u64) -> Result<()> {
         let expense_account = &mut ctx.accounts.expense_account;
         expense_account.id = id;
         expense_account.merchant_name = merchant_name;
@@ -36,7 +37,7 @@ pub mod simple_curd {
         msg!("Owner: {}", expense_account.owner);
         Ok(())
     }
-    pub fn delete(ctx: Context<Delete>) -> Result<()> {
+    pub fn delete(ctx: Context<Delete>, _id: u64) -> Result<()> {
         let expense_account = &mut ctx.accounts.expense_account;
         msg!("Expense account deleted with ID: {}", expense_account.id);
         msg!("Owner: {}", expense_account.owner);
@@ -44,12 +45,10 @@ pub mod simple_curd {
     }
 }
 
-
-
 #[derive(Accounts)]
 #[instruction(id : u64)]
 pub struct Initialize<'info> {
-     #[account(mut)]
+    #[account(mut)]
     pub signer: Signer<'info>,
     #[account(
         init,
@@ -73,9 +72,7 @@ pub struct Update<'info> {
     )]
     pub expense_account: Account<'info, ExpenseAccount>,
     pub system_program: Program<'info, System>,
-
 }
-
 
 #[derive(Accounts)]
 #[instruction(id : u64)]
